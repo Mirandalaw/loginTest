@@ -16,7 +16,7 @@ module.exports = {
         return { hashedPassword, salt };
     },
     verifyPassword: async (password, userSalt, userPassword) => {
-        const key = await pdkdf2Promise(password, userSalt, Number(process.env.KEY_STRETCHING));
+        const key = await pdkdf2Promise(password, userSalt, Number(process.env.KEY_STRETCHING), 64, "sha512");
         const hashedPassword = key.toString('base64');
         if (hashedPassword === userPassword) return true;
         return false;
